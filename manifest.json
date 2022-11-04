@@ -1,0 +1,14 @@
+{
+  "manifest_version": 3,
+  "name": "Sustainability for Cronvall",
+  "version": "1.0",
+  "description": "sustainability good",
+  "content_scripts": [
+    {
+      "js": ["scripts/alternatives.js"],
+      "matches": [
+        "https://www.cronvall.fi/epages/CronvallShop.sf/*"
+      ]
+    }
+  ]
+}
