@@ -33,11 +33,13 @@ if (firstDiv) {
 
     suggestionsDiv.setAttribute('style', `height: ${suggestionsSize} px; margin: 10px 0px 0px 0px; display: flex; flex-direction: row;`);
 
-    const name = document.getElementsByClassName("InfoArea New")[0].children[0].textContent
+    const product_id =
+        document.getElementsByClassName("ProductNo DisplayBlock SmallTopMargin")[0].textContent
+            .replaceAll("Tuotenro:", "").trim()
 
-    // console.log(name)name
+    // console.log(name)
     // const name = 'Kuumavalssattu%201D%20RST%20levy%2012.0x1500x3000mm'
-    fetch(`${HOST}/get_info?name=${encodeURIComponent(name)}`, {method: "GET"})
+    fetch(`${HOST}/get_info?id=${product_id}`, {method: "GET"})
         .then(res => res.json())
         .then(res => {
             const product_info = res[0]
@@ -46,7 +48,7 @@ if (firstDiv) {
             // todo multiply by amount
             emissionsView.innerText = "Total emissions: " + co2Em + " kg CO2e / kg"
 
-            fetch(`${HOST}/get_alternatives?name=${name}`, {method: "GET"})
+            fetch(`${HOST}/get_alternatives?id=${product_id}`, {method: "GET"})
                 .then(res => res.json())
                 .then(res => {
 
@@ -165,7 +167,8 @@ function addSusScore(score, productInfoDiv) {
     susScore.appendChild(susScoreNum)
 
     const susScoreImg = document.createElement("img")
-    susScoreImg.setAttribute("src", chrome.runtime.getURL("static/eco.png"))
+    susScoreImg.setAttribute("src", "https://insightarch.com/wp-content/uploads/2015/04/sustainability.png")
+    susScoreImg.setAttribute("width", "https://insightarch.com/wp-content/uploads/2015/04/sustainability.png")
 
     susScore.appendChild(susScoreImg)
 
