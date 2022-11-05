@@ -33,9 +33,9 @@ if (firstDiv) {
 
     suggestionsDiv.setAttribute('style', `height: ${suggestionsSize} px; margin: 10px 0px 0px 0px; display: flex; flex-direction: row;`);
 
-    const name = document.getElementsByClassName("InfoArea New")[0].children[0].textContent
+    const prodSpecs = document.getElementsByClassName("InfoArea New")[0]
+    const name = prodSpecs.children[0].textContent
 
-    // console.log(name)name
     // const name = 'Kuumavalssattu%201D%20RST%20levy%2012.0x1500x3000mm'
     fetch(`${HOST}/get_info?name=${encodeURIComponent(name)}`, {method: "GET"})
         .then(res => res.json())
@@ -84,13 +84,8 @@ if (firstDiv) {
 
                     addSusScore(134, productInfoDiv)
 
-                    if (productInfoDiv) {
-                        const susDiv = document.createElement("div");
-                        productInfoDiv.appendChild(susDiv)
+                    addProperties(prodSpecs)
 
-                        susDiv.setAttribute('style', 'background; red; height: 20px')
-                        susDiv.innerHTML = 'hey';
-                    }
                 })
         })
 
@@ -100,6 +95,28 @@ if (firstDiv) {
 function add_suggestions(res, suggestionsDiv, product_info) {
     for (let i = 0; i < res.length; i++) {
         const suggestionDiv = document.createElement("div");
+
+        const topLeftTag = document.createElement("div");
+        suggestionDiv.appendChild(topLeftTag)
+        topLeftTag.setAttribute('style', 'float: left; background: white; position: absolute; display: flex; flex-direction: row; border-style: solid; border-radius: 30px; margin-left: -20px; padding: 2px 5px 2px 5px; border-width: 2px;')
+        
+        const plusSus = document.createElement("div");
+        const altScore = res[0]['sustainabilityScore']
+        const prodScore = product_info['sustainabilityScore']
+        const scoreDiff = Math.abs(altScore-prodScore)
+
+        if (prodScore> altScore)
+            plusSus.innerHTML = `-${scoreDiff}`;
+        else 
+            plusSus.innerHTML = `+${scoreDiff}`;
+        plusSus.style.paddingRight = "px"
+
+        const susIcon = document.createElement("img");
+        susIcon.src = "https://insightarch.com/wp-content/uploads/2015/04/sustainability.png"
+        susIcon.setAttribute('style', 'max-height: 20px; padding-left: 2px;')
+
+        topLeftTag.appendChild(plusSus);
+        topLeftTag.appendChild(susIcon)
 
         suggestionsDiv.appendChild(suggestionDiv); // To container for all 3 suggestions, add each suggestion div
         suggestionDiv.setAttribute('style', 'height: ' + imgSize + 'px; display: flex; flex-direction: row; overflow: hidden; margin-right: 10px;');
@@ -137,37 +154,78 @@ function add_suggestions(res, suggestionsDiv, product_info) {
         const priceSpan = document.createElement("span");
         emissionsDiv.appendChild(emissionsSpan);
         emissionsDiv.appendChild(priceSpan);
-        emissionsSpan.setAttribute('style', 'background: lightgreen; display:inline-block;');
+        emissionsSpan.setAttribute('style', 'background: #A9C938; display: block; width: max-content; margin: 0 auto; border-radius: 30px; padding: 0px 5px 0px 5px');
         emissionsSpan.innerHTML = `-${res[i]['Co2Em']} CO2e kg`;
 
         const productPrice = Number(product_info['Price'].slice(0, product_info['Price'].length - 3));
         const altPrice = Number(res[i]['Price'].slice(0, res[i]['Price'].length - 3));
-        console.log("product price", productPrice)
-        console.log("alt price", altPrice);
 
 
         if (productPrice > altPrice)
-            priceSpan.innerHTML = `-${Math.round(Math.abs(altPrice - productPrice))}$`
+            priceSpan.innerHTML = `-${Math.round(Math.abs(altPrice - productPrice))} €`
         else
-            priceSpan.innerHTML = `+${Math.round(Math.abs(altPrice - productPrice))}$`
+            priceSpan.innerHTML = `+${Math.round(Math.abs(altPrice - productPrice))} €`
+
+        
+        
 
     }
 }
 
 function addSusScore(score, productInfoDiv) {
-    const susScore = document.createElement('div')
+    const susScoreAndAverage = document.createElement("div");
+    susScoreAndAverage.setAttribute('style', 'display: flex; flex-direction: column;float: right;')
+
+    const susScore = document.createElement('div');
+    susScoreAndAverage.appendChild(susScore)
+
     susScore.setAttribute("style",
-        `float: right; color: green; margin-left: 30px; 
+        `float: right; margin-left: 30px; 
                             margin-top: ${document.getElementsByClassName("InfoArea New")[0].children[0].clientHeight/2-15}px;
-                            text-align: center;`)
-    const susScoreNum = document.createElement('h1')
-    susScoreNum.innerText = score
-    susScore.appendChild(susScoreNum)
+                            text-align: center; display: flex; flex-direction: row; margin-right: -70px;`);
+    const susScoreNum = document.createElement('h1');
+    susScoreNum.setAttribute('style', 'color: #A9C938; font-size: 3em;')
+    susScoreNum.innerText = score;
+    susScore.appendChild(susScoreNum);
 
-    const susScoreImg = document.createElement("img")
-    susScoreImg.setAttribute("src", chrome.runtime.getURL("static/eco.png"))
+    const susScoreImg = document.createElement("img");
+    susScoreImg.src = "https://insightarch.com/wp-content/uploads/2015/04/sustainability.png";
+    susScoreImg.setAttribute("style", "max-height: 4.5em; margin: -10px 0px 0px 10px")
 
-    susScore.appendChild(susScoreImg)
+    susScore.appendChild(susScoreImg);
 
-    productInfoDiv.parentElement.insertBefore(susScore, productInfoDiv)
+    productInfoDiv.parentElement.insertBefore(susScoreAndAverage, productInfoDiv);
+
+
+    const aboveAverage = document.createElement('div');
+    susScoreAndAverage.appendChild(aboveAverage)
+    aboveAverage.setAttribute('style', 'display: block; color: #A9C938; margin-right: -60px');
+    aboveAverage.innerHTML = "5% above average";
+
+}
+
+
+function addProperties(prodSpecs) {
+    const specsTitle = document.createElement("div")
+    prodSpecs.appendChild(specsTitle)
+    specsTitle.setAttribute('style', 'margin-top: -30px')
+    specsTitle.innerHTML = "Properties of the material"
+
+    const specs = document.createElement("div");
+    prodSpecs.appendChild(specs)
+    specs.setAttribute('style', 'display: flex; flex-direction: row;')
+    
+    const positives = document.createElement("div");
+    const negatives = document.createElement("div");
+    specs.appendChild(positives);
+    specs.appendChild(negatives);
+
+    positives.innerHTML = "positives here"
+    negatives.innerHTML = "negatives here"
+
+    specs.setAttribute('style', 'background: red;')
+    
+    
+    
+
 }
