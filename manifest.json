@@ -21,6 +21,12 @@
       "matches": [
         "https://www.cronvall.fi/epages/CronvallShop.sf/*/?ObjectPath=/Shops/CronvallShop/Categories/Tuotteet/Metalli_ja_Muovilevyt/%22Kyynel-%20ja%20kuviolevyt%22"
       ]
+    },
+    {
+      "js": ["scripts/basket.js"],
+      "matches": [
+        "https://www.cronvall.fi/epages/CronvallShop.sf/*/?ObjectID=*&LastProductObjectID=*"
+      ]
     }
   ]
 }
