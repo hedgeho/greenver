@@ -4,7 +4,7 @@ const suggestionsSize = standardSize * 3; // by default: standardSize = 100px
 const imgSize = standardSize;
 
 
-HOST = 'http://10.84.110.213:5000'
+HOST = 'http://10.100.6.154:5000'
 
 if (firstDiv) {
     // SUSTAINABLE ALTERNATIVES TEXT -------------------
@@ -43,7 +43,8 @@ if (firstDiv) {
         .then(res => res.json())
         .then(res => {
             const product_info = res[0]
-            const co2Em = res[0]['Co2Em']
+            const co2Em = res[0]['CO2eff']
+            
             const emissionsView = document.createElement("p")
             // todo multiply by amount
             emissionsView.innerText = "Total emissions: " + co2Em + " kg CO2e / kg"
@@ -51,6 +52,8 @@ if (firstDiv) {
             fetch(`${HOST}/get_alternatives?id=${product_id}`, {method: "GET"})
                 .then(res => res.json())
                 .then(res => {
+                    const averageSus = Math.round(res[1]['avg_eff_score']*100)
+                    const prosCons = res[1];
 
                     // ADDING SUGGESTIONS -------------------------------------------------------
                     add_suggestions(res, suggestionsDiv, product_info)
@@ -84,9 +87,9 @@ if (firstDiv) {
 
                     const productInfoDiv = document.getElementsByClassName("InfoArea New")[0];
 
-                    addSusScore(134, productInfoDiv)
+                    addSusScore(Math.round(res[0]['eff_score']*100), productInfoDiv, averageSus)
 
-                    addProperties(prodSpecs)
+                    addProperties(prodSpecs, prosCons)
 
                 })
         })
@@ -95,7 +98,7 @@ if (firstDiv) {
 }
 
 function add_suggestions(res, suggestionsDiv, product_info) {
-    for (let i = 0; i < res.length; i++) {
+    for (let i = 1; i < res.length; i++) {
         const suggestionDiv = document.createElement("div");
 
         const topLeftTag = document.createElement("div");
@@ -103,8 +106,8 @@ function add_suggestions(res, suggestionsDiv, product_info) {
         topLeftTag.setAttribute('style', 'float: left; background: white; position: absolute; display: flex; flex-direction: row; border-style: solid; border-radius: 30px; margin-left: -20px; padding: 2px 5px 2px 5px; border-width: 2px;')
 
         const plusSus = document.createElement("div");
-        const altScore = res[0]['sustainabilityScore']
-        const prodScore = product_info['sustainabilityScore']
+        const altScore = Math.round(res[i]['eff_score']*100)
+        const prodScore = Math.round(res[0]['eff_score']*100)
         const scoreDiff = Math.abs(altScore-prodScore)
 
         if (prodScore> altScore)
@@ -120,7 +123,8 @@ function add_suggestions(res, suggestionsDiv, product_info) {
         topLeftTag.appendChild(plusSus);
         topLeftTag.appendChild(susIcon)
 
-        suggestionsDiv.appendChild(suggestionDiv); // To container for all 3 suggestions, add each suggestion div
+        if (prodScore < altScore)
+            suggestionsDiv.appendChild(suggestionDiv); // To container for all 3 suggestions, add each suggestion div
         suggestionDiv.setAttribute('style', 'height: ' + imgSize + 'px; display: flex; flex-direction: row; overflow: hidden; margin-right: 10px;');
 
         const imgDiv = document.createElement("div"); // div for suggestion image
@@ -134,7 +138,7 @@ function add_suggestions(res, suggestionsDiv, product_info) {
         suggestionDiv.appendChild(descriptionDiv); // add the two divs to each suggestion
 
         imgDiv.appendChild(imgImg)
-        imgImg.src = res[i]['ImageURL'];
+        imgImg.src = res[i]['Images'];
         imgImg.setAttribute('style', 'padding: 5px 5px 5px 5px; max-height: 90px;');
 
 
@@ -149,7 +153,7 @@ function add_suggestions(res, suggestionsDiv, product_info) {
         descriptionDiv.appendChild(emissionsDiv);
 
         namePriceDiv.setAttribute('style', 'height: ' + descriptionDiv.offsetHeight / 2 + 'px; margin: 5px 5px 5px 5px;');
-        namePriceDiv.innerHTML = res[i]['Name'];
+        namePriceDiv.innerHTML = res[i]['Names'];
 
         emissionsDiv.setAttribute('style', 'height: ' + descriptionDiv.offsetHeight / 2 + 'px; margin: 0px 5px 5px 5px; text-align: center; display: flex; flex-direction: column;');
         const emissionsSpan = document.createElement("span");
@@ -157,11 +161,10 @@ function add_suggestions(res, suggestionsDiv, product_info) {
         emissionsDiv.appendChild(emissionsSpan);
         emissionsDiv.appendChild(priceSpan);
         emissionsSpan.setAttribute('style', 'background: #A9C938; display: block; width: max-content; margin: 0 auto; border-radius: 30px; padding: 0px 5px 0px 5px');
-        emissionsSpan.innerHTML = `-${res[i]['Co2Em']} CO2e kg`;
+        emissionsSpan.innerHTML = `-${res[i]['CO2eff']} CO2e kg`;
 
-        const productPrice = Number(product_info['Price'].slice(0, product_info['Price'].length - 3));
-        const altPrice = Number(res[i]['Price'].slice(0, res[i]['Price'].length - 3));
-
+        const productPrice = Number(res[0]['Prices']);
+        const altPrice = Number(res[i]['Prices']);
 
         if (productPrice > altPrice)
             priceSpan.innerHTML = `-${Math.round(Math.abs(altPrice - productPrice))} €`
@@ -174,7 +177,7 @@ function add_suggestions(res, suggestionsDiv, product_info) {
     }
 }
 
-function addSusScore(score, productInfoDiv) {
+function addSusScore(score, productInfoDiv, averageSus) {
     const susScoreAndAverage = document.createElement("div");
     susScoreAndAverage.setAttribute('style', 'display: flex; flex-direction: column;float: right;')
 
@@ -186,7 +189,14 @@ function addSusScore(score, productInfoDiv) {
                             margin-top: ${document.getElementsByClassName("InfoArea New")[0].children[0].clientHeight/2-15}px;
                             text-align: center; display: flex; flex-direction: row; margin-right: -70px;`);
     const susScoreNum = document.createElement('h1');
-    susScoreNum.setAttribute('style', 'color: #A9C938; font-size: 3em;')
+    susScoreNum.setAttribute('style', 'color: #A9C938; font-size: 3em;');
+    
+    var aboveBelow = "above"
+
+    if (score < averageSus) {
+        susScoreNum.style.color = "#C93624"
+        aboveBelow = "below"
+    }
     susScoreNum.innerText = score;
     susScore.appendChild(susScoreNum);
 
@@ -201,13 +211,20 @@ function addSusScore(score, productInfoDiv) {
 
     const aboveAverage = document.createElement('div');
     susScoreAndAverage.appendChild(aboveAverage)
-    aboveAverage.setAttribute('style', 'display: block; color: #A9C938; margin-right: -60px');
-    aboveAverage.innerHTML = "5% above average";
+    aboveAverage.setAttribute('style', 'display: block; color: #A9C938;');
+
+    if (score < averageSus) {
+        aboveAverage.style.color = "#C93624"
+    }
+
+    var percentageSus = Math.round(Math.abs((1-(score/averageSus))*100))
+
+    aboveAverage.innerHTML = `${percentageSus}% ${aboveBelow} average`;
 
 }
 
 
-function addProperties(prodSpecs) {
+function addProperties(prodSpecs, prosCons) {
     const specsTitle = document.createElement("div")
     prodSpecs.appendChild(specsTitle)
     specsTitle.setAttribute('style', 'margin-top: -30px')
@@ -215,17 +232,27 @@ function addProperties(prodSpecs) {
 
     const specs = document.createElement("div");
     prodSpecs.appendChild(specs)
-    specs.setAttribute('style', 'display: flex; flex-direction: row;')
+    specs.setAttribute('style', 'background: red; display: flex; flex-direction: row; width: 100%;')
 
     const positives = document.createElement("div");
     const negatives = document.createElement("div");
     specs.appendChild(positives);
     specs.appendChild(negatives);
+    positives.setAttribute('style', 'display: block; float: left; width: 50%;')
+    negatives.setAttribute('style', 'display: block; float: right; background: green; width: 50%;')
 
-    positives.innerHTML = "positives here"
-    negatives.innerHTML = "negatives here"
+    const pos1 = document.createElement("div");
+    const pos2 = document.createElement("div");
+    const con1 = document.createElement("div");
+    const con2 = document.createElement("div");
 
-    specs.setAttribute('style', 'background: red;')
+    positives.appendChild(pos1)
+    positives.appendChild(pos2)
+    negatives.appendChild(con1)
+    negatives.appendChild(con2)
+
+    // positives.innerHTML = "positives here"
+    // negatives.innerHTML = "negatives here"
 
 
 
