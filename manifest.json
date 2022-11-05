@@ -7,7 +7,13 @@
     {
       "js": ["scripts/alternatives.js"],
       "matches": [
-        "https://www.cronvall.fi/epages/CronvallShop.sf/*"
+        "https://www.cronvall.fi/epages/CronvallShop.sf/fi_FI/?ObjectPath=/Shops/CronvallShop/Products/*"
+      ]
+    },
+    {
+      "js": ["scripts/productListIcons.js"],
+      "matches": [
+        "https://www.cronvall.fi/epages/CronvallShop.sf/fi_FI/?ObjectPath=/Shops/CronvallShop/Categories/*"
       ]
     }
   ]
