@@ -82,9 +82,7 @@ if (firstDiv) {
 
                     const productInfoDiv = document.getElementsByClassName("InfoArea New")[0];
 
-                    const susScore = document.createElement('h1')
-                    susScore.innerText = "134"
-                    productInfoDiv.insertBefore(susScore, productInfoDiv.children[2])
+                    addSusScore(134, productInfoDiv)
 
                     if (productInfoDiv) {
                         const susDiv = document.createElement("div");
@@ -154,4 +152,22 @@ function add_suggestions(res, suggestionsDiv, product_info) {
             priceSpan.innerHTML = `+${Math.round(Math.abs(altPrice - productPrice))}$`
 
     }
+}
+
+function addSusScore(score, productInfoDiv) {
+    const susScore = document.createElement('div')
+    susScore.setAttribute("style",
+        `float: right; color: green; margin-left: 30px; 
+                            margin-top: ${document.getElementsByClassName("InfoArea New")[0].children[0].clientHeight/2-15}px;
+                            text-align: center;`)
+    const susScoreNum = document.createElement('h1')
+    susScoreNum.innerText = score
+    susScore.appendChild(susScoreNum)
+
+    const susScoreImg = document.createElement("img")
+    susScoreImg.setAttribute("src", chrome.runtime.getURL("static/eco.png"))
+
+    susScore.appendChild(susScoreImg)
+
+    productInfoDiv.parentElement.insertBefore(susScore, productInfoDiv)
 }
