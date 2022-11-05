@@ -1,0 +1,3 @@
+[submodule "junction22-backend"]
+	path = junction22-backend
+	url = https://github.com/hedgeho/junction22-backend.git
