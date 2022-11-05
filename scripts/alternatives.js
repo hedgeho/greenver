@@ -174,3 +174,18 @@ function addSusScore(score, productInfoDiv) {
 
     productInfoDiv.parentElement.insertBefore(susScore, productInfoDiv)
 }
+
+function addReturnButton(product_id, amount, productInfoDiv) {
+    const addButton = document.getElementsByName("AddToBasket")[0]
+    addButton.setAttribute("style", "width: 49%;")
+    const returnButton = document.createElement("button")
+    returnButton.className = "ep-js  AddToBasketButton ep-uiInput-big ep-uiInput ep-uiInput-button"
+    returnButton.innerText = "return"
+    returnButton.setAttribute("style", "float: right; width: 49%; background: green")
+    addButton.parentElement.insertBefore(returnButton, addButton)
+
+    returnButton.onclick = function () {
+        localStorage.setItem("product_id", product_id)
+        localStorage.setItem("amount", amount)
+    }
+}
