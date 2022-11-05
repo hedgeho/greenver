@@ -2,6 +2,8 @@ const firstDiv = document.getElementsByClassName("ProductDetails ImgLeft");
 const standardSize = 100;
 
 
+HOST = 'http://10.84.110.213:5000'
+
 if (firstDiv) {
     // SUSTAINABLE ALTERNATIVES TEXT -------------------
     const susAltText = document.createElement("div");
@@ -14,7 +16,7 @@ if (firstDiv) {
 
     const addedDiv = document.createElement("div");
     firstDiv.item(0).appendChild(addedDiv);
-    
+
     const firstSugg = document.createElement("div");
     const firstImg = document.createElement("img");
 
@@ -29,9 +31,29 @@ if (firstDiv) {
 
     const suggestionsSize = standardSize * suggestionsArray.size; // by default: standardSize = 100px
     const imgSize = standardSize;
-    
+
     addedDiv.setAttribute('style', `height: ${suggestionsSize} px; margin: 10px 0px 0px 0px; display: flex; flex-direction: row;`);
-    
+
+    const name = 'steel shit'
+    fetch(`${HOST}/get_info?name=${name}`, {method: "GET"})
+        .then(res => res.json())
+        .then(res => {
+            const co2Em = res[0]['Co2Em']
+            const emissionsView = document.createElement("p")
+            // todo multiply by amount
+            emissionsView.innerText = "Total emissions: " + co2Em + " kg CO2e / kg"
+        })
+    fetch(`${HOST}/get_alternatives?name=${name}`, {method: "GET"})
+        .then(res => res.json())
+        .then(res => {
+            console.log(res)
+            for (let i = 0; i < res.length; i++) {
+                addedDiv.appendChild(suggestionsArray[i]);
+                suggestionsArray[i].appendChild(imgArray[i])
+                suggestionsArray[i].setAttribute('style', 'height: 50px;');
+                suggestionsArray[i].innerHTML = res[i]['Name'];
+            }
+        })
 
     for (let i = 0; i < suggestionsArray.length; i++) {
         addedDiv.appendChild(suggestionsArray[i]); // To container for all 3 suggestions, add each suggestion div
@@ -68,7 +90,7 @@ if (firstDiv) {
         emissionsDiv.setAttribute('style', 'background: purple; width: 100%; height: ' + rightDiv.offsetHeight/2 + 'px; margin: 5px 5px 5px 5px;');
         emissionsDiv.innerHTML = 'here are the emissions akjdhfljkahsdlfkjhalskjd';
 
-        
+
     }
     
 }
