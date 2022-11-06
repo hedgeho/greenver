@@ -20,18 +20,33 @@ Touch this [demo](https://www.cronvall.fi/epages/CronvallShop.sf/secb69bc55229/?
 , Carbon Footprint and Water Usage.  Can be extended to include Recyclability, Amount of Hazardous Waste Present, etc. 
 - **More greener alternatives for each product**.  When selecting a product, the recommendation system suggests similar products with a higher `sustainability score`.  
    - In the categories section, we display a range of the sustainability score of the products present under that category.
+
+  <p align="center">
+  <img src="data/categories.png" alt="drawing" width="350"/>
+  </font>
+
    - Displaying the score of individual products and compare it with the average score of similar products.
    - Displaying similar products with a higher sustainability score as alternatives. We use simple analogies to let customer understand and feel the impact of their choices.
+
+  <p align="center">
+  <img src="data/product.png" alt="drawing" width="350"/>
+  </font>
+
 - **Recycling**. Often companies miscalculate the amount of materials they need, which results in toxic waste or costly efforts to sell them. We suggest that Cronvall offers companies an option to return unnecessary items back to the platform, when making an order for new materials. This helps save money on cargo delivery, since Cronvall picks up the return when delivering the order.
   - Can be seen on any product page or basket view  
- <p style="text-align: center;"><img src="data/recycling.jpg" alt="drawing" width="350"/></font>   
+<p align="center">
+ <img src="data/recycling.jpg" alt="drawing" width="350"/>
+ </font>   
  
 - **The greening of any shopping process**. Providing impact analysis for e-commerce platforms by browser extension.  
- <p style="text-align: center;"><img src="data/chrome_ext.jpg" alt="drawing" width="350"/></font>   
+
+<p align="center">
+<img src="data/chrome_ext.jpg" alt="drawing" width="350"/>
+</font>   
 
 The final app consists of backend and frontend parts.
 The frontend is a Chrome extension working on Cronvall website, the code for it can be found in the current repository.
-The backend is a simple Flask server </font>using sentence_transformers and pandas for data analysis.
+The backend is a simple Flask server using sentence_transformers and pandas for data analysis.
 The backend code is placed in junction22-backend repository (sub-module of this repo).
 
 ### How to start frontend
