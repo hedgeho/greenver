@@ -1,8 +1,11 @@
 <img src="data/greenver.png" alt="drawing" width="5000"/>
+<p align="center">
+<b>MAKING INDUSTRIAL PURCHASE DECISIONS MORE TRANSPARENT & SUSTAINABLE</b>
+</p>
 
- <font size="6"><p style="text-align: center;">Making industrial purchase decisions  
-  more transparent & sustainable</p></font>
-  <font size="3"><p style="text-align: center;">[CRONVALL](https://www.cronvall.fi/), [JUNCTION'22](https://www.hackjunction.com/)</p></font>
+<p align="center">
+<a href="https://www.cronvall.fi/">CRONVALL</a>, <a href=https://www.hackjunction.com/>JUNCTION'22</a>
+</font>
 
 ## Project description
 Let's help the customers make more sustainable and data-driven decisions.  
