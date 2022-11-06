@@ -18,18 +18,6 @@ if (firstDiv) {
     const suggestionsDiv = document.createElement("div");
     firstDiv.item(0).appendChild(suggestionsDiv);
 
-    // const firstSugg = document.createElement("div");
-    // const firstImg = document.createElement("img");
-    //
-    // const secondSugg = document.createElement("div");
-    // const secongImg = document.createElement("img");
-    //
-    // const thirdSugg = document.createElement("div");
-    // const thirdImg = document.createElement("img");
-    //
-    // const suggestionsArray = [firstSugg, secondSugg, thirdSugg]; // an array of all the suggestions
-    // const imgArray = [firstImg, secongImg, thirdImg]; // an array of all the images of suggestions
-
 
     suggestionsDiv.setAttribute('style', `height: ${suggestionsSize} px; margin: 10px 0px 0px 0px; display: flex; flex-direction: row;`);
 
@@ -59,32 +47,7 @@ if (firstDiv) {
 
                     // ADDING SUGGESTIONS -------------------------------------------------------
                     add_suggestions(res, suggestionsDiv, product_info)
-                    // --------------------------------------------------------------------------------
-
-
-                    // const tagNames = document.getElementsByClassName("ReferencePrice AlignLeft");
-
-                    // if (tagNames) {
-                    //     const tagsDiv = document.createElement("div");
-                    //     tagNames.item(0).appendChild(tagsDiv);
-                    //     tagsDiv.setAttribute('style', 'height: 50px; background: red; margin: 5px 0px 10px 0px; display: flex; flex-direction: row;');
-
-                    //     const tag1 = document.createElement("div");
-                    //     tag1.innerHTML = "Non-hazardous";
-
-                    //     const tag2 = document.createElement("div");
-                    //     tag2.innerHTML = "100% recyclable";
-
-                    //     const tags = [tag1, tag2];
-
-                    //     for (let i = 0; i < tags.length; i++) {
-                    //         tagsDiv.appendChild(tags[i]);
-                    //         tags[i].setAttribute('style', 'height: 40px; background: blue; margin: 5px 5px 5px 5px; vertical-align: middle;');
-                    //     }
-
-
-                    // }
-
+                    // --------------------------------------------------------------------------
 
 
                     const productInfoDiv = document.getElementsByClassName("InfoArea New")[0];
@@ -114,7 +77,7 @@ function add_suggestions(res, suggestionsDiv, product_info) {
 
         let min = [...susArrayPost][0]
         susArrayPost.forEach(function(value, key) {
-            if (value > min[1])
+            if (value < min[1])
                 min = [key,value]
         })
 
@@ -131,7 +94,7 @@ function add_suggestions(res, suggestionsDiv, product_info) {
         const prodScore = Math.round(res[0]['eff_score']*100)
         const scoreDiff = Math.abs(altScore-prodScore)
 
-        if (prodScore> altScore)
+        if (prodScore > altScore)
             plusSus.innerHTML = `-${scoreDiff}`;
         else
             plusSus.innerHTML = `+${scoreDiff}`;
@@ -147,7 +110,7 @@ function add_suggestions(res, suggestionsDiv, product_info) {
         if (prodScore < altScore)
             suggestionsDiv.appendChild(suggestionDiv); // To container for all 3 suggestions, add each suggestion div
         suggestionDiv.setAttribute('style', 'height: ' + imgSize + 'px; display: flex; flex-direction: row; overflow: hidden; margin-right: 10px;');
-
+        
         const imgDiv = document.createElement("div"); // div for suggestion image
         const imgImg = document.createElement("img"); // suggestion image
         const descriptionDiv = document.createElement("div"); // div for name, price, etc
@@ -164,7 +127,7 @@ function add_suggestions(res, suggestionsDiv, product_info) {
 
 
         // Description of the suggestion ----------------------------------------
-        const namePriceDiv = document.createElement("div");
+        const namePriceDiv = document.createElement("a");
         const emissionsDiv = document.createElement("div");
 
         namePriceDiv.classList.add("namePrice");
@@ -173,8 +136,9 @@ function add_suggestions(res, suggestionsDiv, product_info) {
         descriptionDiv.appendChild(namePriceDiv);
         descriptionDiv.appendChild(emissionsDiv);
 
-        namePriceDiv.setAttribute('style', 'height: ' + descriptionDiv.offsetHeight / 2 + 'px; margin: 5px 5px 5px 5px;');
+        namePriceDiv.setAttribute('style', 'height: ' + descriptionDiv.offsetHeight / 2 + 'px; margin: 5px 5px 5px 5px; cursor: pointer;');
         namePriceDiv.innerHTML = res[i]['Names'];
+        namePriceDiv.href = res[i]['Urls']
 
         emissionsDiv.setAttribute('style', 'height: ' + descriptionDiv.offsetHeight / 2 + 'px; margin: 0px 5px 5px 5px; text-align: center; display: flex; flex-direction: column;');
         const emissionsSpan = document.createElement("span");
@@ -188,16 +152,28 @@ function add_suggestions(res, suggestionsDiv, product_info) {
         treeIcon.style.maxHeight = "20px"
 
         const houseIcon = document.createElement("img")
-        houseIcon.src = "https://cdn-icons-png.flaticon.com/512/861/861121.png"
+        houseIcon.src = "https://equalrightscenter.org/wp-content/uploads/house-icon-1.png"
         houseIcon.style.maxHeight = "20px"
 
         const bottleIcon = document.createElement("img")
         bottleIcon.src = "https://tse4.mm.bing.net/th?id=OIP.Nkj_5eAzoR_Cl9cMEEZ2_wHaHa&pid=Api"
         bottleIcon.style.maxHeight = "20px"
 
+        const bottleIcon2 = document.createElement("img")
+        bottleIcon2.src = "https://tse4.mm.bing.net/th?id=OIP.Nkj_5eAzoR_Cl9cMEEZ2_wHaHa&pid=Api"
+        bottleIcon2.style.maxHeight = "20px"
+
+        const energyIcon = document.createElement("img")
+        energyIcon.src = "https://cdn.onlinewebfonts.com/svg/img_428473.png"
+        energyIcon.style.maxHeight = "20px"
+
+        const energyIcon2 = document.createElement("img")
+        energyIcon2.src = "https://cdn.onlinewebfonts.com/svg/img_428473.png"
+        energyIcon2.style.maxHeight = "20px"
+
         console.log(res[i])
         
-        if (min[0] == "CO2eff") {
+        if (minValue == "CO2eff") {
             const treesAmount = document.createElement("span")
             treesAmount.innerHTML = `${Math.round(Math.abs(res[i]['Trees']))}`
             const CO2Amount = document.createElement("span")
@@ -205,17 +181,36 @@ function add_suggestions(res, suggestionsDiv, product_info) {
             emissionsSpan.appendChild(treesAmount)
             emissionsSpan.appendChild(treeIcon)
             emissionsSpan.appendChild(CO2Amount)
-        } else if (min[0] == "Energy") {
+        } else if (minValue == "Energy") {
             const yearlyEnergy = document.createElement("span")
-            yearlyEnergy.innerHTML = `yearly energy of ${Math.abs(res[i]['Energy'])}}`
+            yearlyEnergy.innerHTML = `yearly `
+            const houseAmount = document.createElement("span")
+            houseAmount.innerHTML = ` of ${Math.abs(res[i]['Energy'])}`
             const savedEnergy = document.createElement("span")
-            savedEnergy.innerHTML = ` = ${Math.abs(res[i]['Homes']).toFixed(2)} mJ/kg of energy saved`
+            savedEnergy.innerHTML = ` = ${Math.abs(res[i]['Homes']).toFixed(2)} mJ/kg of `
+            const energySaved = document.createElement("span")
+            energySaved.innerHTML = ` saved`
             emissionsSpan.appendChild(yearlyEnergy)
+            emissionsSpan.appendChild(energyIcon)
+            emissionsSpan.appendChild(houseAmount)
             emissionsSpan.appendChild(houseIcon)
             emissionsSpan.appendChild(savedEnergy)
+            emissionsSpan.appendChild(energyIcon2)
+            emissionsSpan.appendChild(energySaved)
         } else {
-
+            const litres = document.createElement("span")
+            litres.innerHTML = `${Math.abs(res[i]['Bottle'])} litres of `
+            const savedWater = document.createElement("span")
+            savedWater.innerHTML = ` saved = ${res[i]['Water']} L/kg less `
+            const usage = document.createElement("span")
+            usage.innerHTML = ` usage`
+            emissionsSpan.appendChild(litres)
+            emissionsSpan.appendChild(bottleIcon)
+            emissionsSpan.appendChild(savedWater)
+            emissionsSpan.appendChild(bottleIcon2)
+            emissionsSpan.appendChild(usage)
         }
+
 
         const productPrice = Number(res[0]['Prices']);
         const altPrice = Number(res[i]['Prices']);
@@ -224,8 +219,6 @@ function add_suggestions(res, suggestionsDiv, product_info) {
             priceSpan.innerHTML = `-${Math.round(Math.abs(altPrice - productPrice))} €`
         else
             priceSpan.innerHTML = `+${Math.round(Math.abs(altPrice - productPrice))} €`
-
-
 
 
     }
