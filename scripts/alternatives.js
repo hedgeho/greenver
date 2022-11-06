@@ -54,6 +54,7 @@ if (firstDiv) {
                 .then(res => {
                     const averageSus = Math.round(res[1]['avg_eff_score']*100)
                     const prosCons = res[1];
+                    console.log(res[1])
 
                     // ADDING SUGGESTIONS -------------------------------------------------------
                     add_suggestions(res, suggestionsDiv, product_info)
@@ -232,30 +233,34 @@ function addProperties(prodSpecs, prosCons) {
 
     const specs = document.createElement("div");
     prodSpecs.appendChild(specs)
-    specs.setAttribute('style', 'background: red; display: flex; flex-direction: row; width: 100%;')
+    specs.setAttribute('style', 'display: flex; flex-direction: row; width: 100%;')
 
     const positives = document.createElement("div");
     const negatives = document.createElement("div");
     specs.appendChild(positives);
     specs.appendChild(negatives);
     positives.setAttribute('style', 'display: block; float: left; width: 50%;')
-    negatives.setAttribute('style', 'display: block; float: right; background: green; width: 50%;')
+    negatives.setAttribute('style', 'display: block; float: right; width: 50%;')
 
-    const pos1 = document.createElement("div");
-    const pos2 = document.createElement("div");
-    const con1 = document.createElement("div");
-    const con2 = document.createElement("div");
+    const pos1 = document.createElement("p");
+    const pos2 = document.createElement("p");
+    const con1 = document.createElement("p");
+    const con2 = document.createElement("p");
 
     positives.appendChild(pos1)
     positives.appendChild(pos2)
     negatives.appendChild(con1)
     negatives.appendChild(con2)
 
-    // positives.innerHTML = "positives here"
-    // negatives.innerHTML = "negatives here"
+    pos1.setAttribute('style', 'font-size: 0.9em; color: #A9C938;');
+    pos2.setAttribute('style', 'font-size: 0.9em; color: #A9C938;');
+    con1.setAttribute('style', 'font-size: 0.9em; color: #C93624;');
+    con2.setAttribute('style', 'font-size: 0.9em; color: #C93624;');
 
-
-
+    pos1.innerHTML = `•  ${prosCons['pro_1']}`
+    pos2.innerHTML = `•  ${prosCons['pro_2']}`
+    con1.innerHTML = `•  ${prosCons['pro_1']}`
+    con2.innerHTML = `•  ${prosCons['con_2']}`
 
 }
 
