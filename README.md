@@ -1,4 +1,6 @@
 <img src="data/greenver.png" alt="drawing" width="5000"/>
+Cronvall challenge ***Making industrial purchase decisions more transparent & sustainable***
+JUNCTION 2022.
 Project for Cronvall challenge at Junction hackathon '22
 
 ## App description
