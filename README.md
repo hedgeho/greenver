@@ -50,9 +50,10 @@ The backend is a simple Flask server using sentence_transformers and pandas for 
 The backend code is placed in greenver-backend repository (sub-module of this repo).
 
 ### How to start frontend
-1. Download the repo
-2. Go to [chrome extensions](chrome://extensions/), toggle Developer mode in top-right corner, press Load unpacked with the path to downloaded repo
-3. Go to [cronvall](https://www.cronvall.fi/) -> Metal and Plastic Sheets
+1. Clone the repo `git clone https://github.com/hedgeho/greenver.git && cd greenver`
+2. Run `git submodule update --init --recursive`
+3. Go to [chrome extensions](chrome://extensions/), toggle Developer mode in top-right corner, press Load unpacked with the path to downloaded repo
+4. Go to [cronvall](https://www.cronvall.fi/) -> Metal and Plastic Sheets
 
 ### How to start backend
 1. Install requirements.txt
