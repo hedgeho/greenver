@@ -323,7 +323,7 @@ function addReturnButton(product_id) {
     const returnButton = document.createElement("button")
     returnButton.className = "ep-js  AddToBasketButton ep-uiInput-big ep-uiInput ep-uiInput-button"
     returnButton.innerText = "palata"
-    returnButton.setAttribute("style", "float: right; width: 49%; background: green !important;")
+    returnButton.setAttribute("style", "float: right; width: 49%; background: #A9C938 !important;")
     addButton.parentElement.insertBefore(returnButton, addButton)
 
     returnButton.onclick = function () {
