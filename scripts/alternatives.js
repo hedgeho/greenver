@@ -56,7 +56,6 @@ if (firstDiv) {
                 .then(res => {
                     const averageSus = Math.round(res[1]['avg_eff_score']*100)
                     const prosCons = res[1];
-                    console.log(res[1])
 
                     // ADDING SUGGESTIONS -------------------------------------------------------
                     add_suggestions(res, suggestionsDiv, product_info)
@@ -102,6 +101,25 @@ if (firstDiv) {
 
 function add_suggestions(res, suggestionsDiv, product_info) {
     for (let i = 1; i < res.length; i++) {
+        const energy = res[i]['Energy']
+        const water = res[i]['Water']
+        const CO2 = res[i]['CO2eff']
+        const susArrayPre = new Map([["Energy", energy],["Water", water],["CO2eff", CO2]]);
+        var susArrayPost = new Map([]);
+
+        susArrayPre.forEach(function(value, key) {
+            if (value > 0)
+                susArrayPost.set(key,value)
+        })
+
+        let min = [...susArrayPost][0]
+        susArrayPost.forEach(function(value, key) {
+            if (value > min[1])
+                min = [key,value]
+        })
+
+        const minValue = min[0]
+
         const suggestionDiv = document.createElement("div");
 
         const topLeftTag = document.createElement("div");
@@ -164,7 +182,40 @@ function add_suggestions(res, suggestionsDiv, product_info) {
         emissionsDiv.appendChild(emissionsSpan);
         emissionsDiv.appendChild(priceSpan);
         emissionsSpan.setAttribute('style', 'background: #A9C938; display: block; width: max-content; margin: 0 auto; border-radius: 30px; padding: 0px 5px 0px 5px');
-        emissionsSpan.innerHTML = `-${res[i]['CO2eff']} CO2e kg`;
+        
+        const treeIcon = document.createElement("img")
+        treeIcon.src = "https://www.iconpacks.net/icons/2/free-tree-icon-1578-thumb.png"
+        treeIcon.style.maxHeight = "20px"
+
+        const houseIcon = document.createElement("img")
+        houseIcon.src = "https://cdn-icons-png.flaticon.com/512/861/861121.png"
+        houseIcon.style.maxHeight = "20px"
+
+        const bottleIcon = document.createElement("img")
+        bottleIcon.src = "https://tse4.mm.bing.net/th?id=OIP.Nkj_5eAzoR_Cl9cMEEZ2_wHaHa&pid=Api"
+        bottleIcon.style.maxHeight = "20px"
+
+        console.log(res[i])
+        
+        if (min[0] == "CO2eff") {
+            const treesAmount = document.createElement("span")
+            treesAmount.innerHTML = `${Math.round(Math.abs(res[i]['Trees']))}`
+            const CO2Amount = document.createElement("span")
+            CO2Amount.innerHTML = ` = ${CO2} CO2/kg`
+            emissionsSpan.appendChild(treesAmount)
+            emissionsSpan.appendChild(treeIcon)
+            emissionsSpan.appendChild(CO2Amount)
+        } else if (min[0] == "Energy") {
+            const yearlyEnergy = document.createElement("span")
+            yearlyEnergy.innerHTML = `yearly energy of ${Math.abs(res[i]['Energy'])}}`
+            const savedEnergy = document.createElement("span")
+            savedEnergy.innerHTML = ` = ${Math.abs(res[i]['Homes']).toFixed(2)} mJ/kg of energy saved`
+            emissionsSpan.appendChild(yearlyEnergy)
+            emissionsSpan.appendChild(houseIcon)
+            emissionsSpan.appendChild(savedEnergy)
+        } else {
+
+        }
 
         const productPrice = Number(res[0]['Prices']);
         const altPrice = Number(res[i]['Prices']);
@@ -261,7 +312,7 @@ function addProperties(prodSpecs, prosCons) {
 
     pos1.innerHTML = `•  ${prosCons['pro_1']}`
     pos2.innerHTML = `•  ${prosCons['pro_2']}`
-    con1.innerHTML = `•  ${prosCons['pro_1']}`
+    con1.innerHTML = `•  ${prosCons['con_1']}`
     con2.innerHTML = `•  ${prosCons['con_2']}`
 
 }
@@ -272,7 +323,7 @@ function addReturnButton(product_id) {
     const returnButton = document.createElement("button")
     returnButton.className = "ep-js  AddToBasketButton ep-uiInput-big ep-uiInput ep-uiInput-button"
     returnButton.innerText = "palata"
-    returnButton.setAttribute("style", "float: right; width: 49%; background: green")
+    returnButton.setAttribute("style", "float: right; width: 49%; background: green !important;")
     addButton.parentElement.insertBefore(returnButton, addButton)
 
     returnButton.onclick = function () {
