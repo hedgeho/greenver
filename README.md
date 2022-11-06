@@ -61,7 +61,7 @@ The backend code is placed in greenver-backend repository (sub-module of this re
 You can start with [this example](https://www.cronvall.fi/epages/CronvallShop.sf/sec242a7960e8/?ObjectPath=/Shops/CronvallShop/Products/TiGr1) after setting up the project. 
 
 <p align="center">
-Join us in sustainable future
+Join us in sustainable future.
 </p>
 
 <p align="center">
