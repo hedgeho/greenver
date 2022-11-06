@@ -38,13 +38,15 @@ if (firstDiv) {
         document.getElementsByClassName("ProductNo DisplayBlock SmallTopMargin")[0].textContent
             .replaceAll("Tuotenro:", "").trim()
 
+    addReturnButton(product_id)
+
     // const name = 'Kuumavalssattu%201D%20RST%20levy%2012.0x1500x3000mm'
     fetch(`${HOST}/get_info?id=${product_id}`, {method: "GET"})
         .then(res => res.json())
         .then(res => {
             const product_info = res[0]
             const co2Em = res[0]['CO2eff']
-            
+
             const emissionsView = document.createElement("p")
             // todo multiply by amount
             emissionsView.innerText = "Total emissions: " + co2Em + " kg CO2e / kg"
@@ -191,7 +193,7 @@ function addSusScore(score, productInfoDiv, averageSus) {
                             text-align: center; display: flex; flex-direction: row; margin-right: -70px;`);
     const susScoreNum = document.createElement('h1');
     susScoreNum.setAttribute('style', 'color: #A9C938; font-size: 3em;');
-    
+
     var aboveBelow = "above"
 
     if (score < averageSus) {
@@ -264,17 +266,17 @@ function addProperties(prodSpecs, prosCons) {
 
 }
 
-function addReturnButton(product_id, amount, productInfoDiv) {
+function addReturnButton(product_id) {
     const addButton = document.getElementsByName("AddToBasket")[0]
     addButton.setAttribute("style", "width: 49%;")
     const returnButton = document.createElement("button")
     returnButton.className = "ep-js  AddToBasketButton ep-uiInput-big ep-uiInput ep-uiInput-button"
-    returnButton.innerText = "return"
+    returnButton.innerText = "palata"
     returnButton.setAttribute("style", "float: right; width: 49%; background: green")
     addButton.parentElement.insertBefore(returnButton, addButton)
 
     returnButton.onclick = function () {
         localStorage.setItem("product_id", product_id)
-        localStorage.setItem("amount", amount)
+        localStorage.setItem("amount", document.getElementsByName("Quantity")[0].value)
     }
 }

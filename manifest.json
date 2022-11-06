@@ -13,7 +13,7 @@
     {
       "js": ["scripts/productListIcons.js"],
       "matches": [
-        "https://www.cronvall.fi/epages/CronvallShop.sf/*/?ObjectPath=/Shops/CronvallShop/Categories/*"
+        "https://www.cronvall.fi/epages/CronvallShop.sf/*/?ObjectPath=/Shops/CronvallShop/Categories/Tuotteet/Metalli_ja_Muovilevyt"
       ]
     },
     {
@@ -25,7 +25,7 @@
     {
       "js": ["scripts/basket.js"],
       "matches": [
-        "https://www.cronvall.fi/epages/CronvallShop.sf/*/?ObjectID=*&LastProductObjectID=*"
+        "https://www.cronvall.fi/epages/CronvallShop.sf/*/?ObjectID=*"
       ]
     }
   ]
