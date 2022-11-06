@@ -1,6 +1,4 @@
 <img src="data/greenver.png" alt="drawing" width="5000"/>
-
-# Piece of sheet
 Project for Cronvall challenge at Junction hackathon '22
 
 ## App description
