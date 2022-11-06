@@ -11,7 +11,7 @@
 Let's help the customers make more sustainable and data-driven decisions.  
 Grenver - clever assistant that collects and provides up-to-date information on the most sustainable products on the marketplace.
 
-As part of the hackathon, Grenver provides guidance on how to find the most sustainable metal sheet for [Cronwall](https://www.cronvall.fi/) customers.
+As part of the hackathon, Grenver provides guidance on how to find the most sustainable metal sheet for [Cronwall](https://www.cronvall.fi/) customers.  
 Touch this [demo](https://www.cronvall.fi/epages/CronvallShop.sf/secb69bc55229/?ObjectPath=/Shops/CronvallShop/Products/2201151085&ViewAction=ViewProduct&SearchParams=%7B%22Materiaali%22%3A%22Kuumasinkitty+DX51D%2BZ275MAC%22%7D). 
 
 ### Features
