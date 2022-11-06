@@ -1,4 +1,4 @@
-HOST = 'http://10.100.6.154:5000'
+HOST = 'http://localhost:5000'
 
 
 if (localStorage.getItem("product_id")) {

@@ -4,7 +4,7 @@ const suggestionsSize = standardSize * 3; // by default: standardSize = 100px
 const imgSize = standardSize;
 
 
-HOST = 'http://10.100.6.154:5000'
+HOST = 'http://localhost:5000'
 
 if (firstDiv) {
     // SUSTAINABLE ALTERNATIVES TEXT -------------------
