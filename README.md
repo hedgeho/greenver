@@ -42,5 +42,10 @@ The backend code is placed in junction22-backend repository (sub-module of this 
 1. Install requirements.txt
 2. Start the server: `flask run`
 
- <font size="3"><p style="text-align: center;">Join in our sustainable future</p></font>
- <p style="text-align: center;"><img src="data/end.png" alt="drawing" width="50"/></font>
+<p align="center">
+Join in our sustainable future
+</p>
+
+<p align="center">
+<img src="data/end.png" alt="drawing" width="100"/>
+</p>
