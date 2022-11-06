@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "Sustainability for Cronvall",
-  "version": "1.0",
-  "description": "sustainability good",
+  "name": "Greenver",
+  "version": "0.1",
+  "description": "Visibility for environmental impact of your company's purchases.",
   "content_scripts": [
     {
       "js": ["scripts/alternatives.js"],
@@ -28,5 +28,8 @@
         "https://www.cronvall.fi/epages/CronvallShop.sf/*/?ObjectID=*"
       ]
     }
-  ]
+  ],
+  "icons": {
+    "128": "data/img.png"
+  }
 }

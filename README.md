@@ -1,26 +1,68 @@
 <img src="data/greenver.png" alt="drawing" width="5000"/>
+<p align="center">
+<b>MAKING INDUSTRIAL PURCHASE DECISIONS MORE TRANSPARENT & SUSTAINABLE</b>
+</p>
 
-Cronvall challenge **Making industrial purchase decisions more transparent & sustainable**
-JUNCTION 2022.
-Project for Cronvall challenge at Junction hackathon '22
+<p align="center">
+<a href="https://www.cronvall.fi/">CRONVALL</a>, <a href=https://www.hackjunction.com/>JUNCTION'22</a>
+</font>
 
-## App description
-The app consists of backend and frontend parts. 
-The frontend is a Chrome extension working on Cronvall website, the code for it can be found in the current repository. 
-The backend is a simple Flask server using sentence_transformers and pandas for data analysis. 
+## Project description
+Let's help the customers make more sustainable and data-driven decisions.  
+Grenver - clever assistant that collects and provides up-to-date information on the most sustainable products on the marketplace.
+
+As part of the hackathon, Grenver provides guidance on how to find the most sustainable metal sheet for [Cronwall](https://www.cronvall.fi/) customers.  
+
+### Features
+- **Sustainability information for products**  
+  - **Sustainability score** as a measure of Sustainability for a product. A metric calculated on: Energy Consumed in production
+, Carbon Footprint and Water Usage.  Can be extended to include Recyclability, Amount of Hazardous Waste Present, etc. 
+- **More greener alternatives for each product**.  When selecting a product, the recommendation system suggests similar products with a higher `sustainability score`.  
+   - In the categories section, we display a range of the sustainability score of the products present under that category.
+
+  <p align="center">
+  <img src="data/categories.png" alt="drawing" width="650"/>
+  </font>
+
+   - Displaying the score of individual products and compare it with the average score of similar products.
+   - Displaying similar products with a higher sustainability score as alternatives. We use simple analogies to let customer understand and feel the impact of their choices.
+
+  <p align="center">
+  <img src="data/product.png" alt="drawing" width="650"/>
+  </font>
+
+- **Recycling**. Often companies miscalculate the amount of materials they need, which results in toxic waste or costly efforts to sell them. We suggest that Cronvall offers companies an option to return unnecessary items back to the platform, when making an order for new materials. This helps save money on cargo delivery, since Cronvall picks up the return when delivering the order.
+  - Can be seen on any product page or basket view  
+<p align="center">
+ <img src="data/recycling.jpg" alt="drawing" width="650"/>
+ </font>   
+ 
+- **The greening of any shopping process**. Providing impact analysis for e-commerce platforms by browser extension.  
+
+<p align="center">
+<img src="data/chrome_ext.jpg" alt="drawing" width="550"/>
+</font>   
+
+The final app consists of backend and frontend parts.
+The frontend is a Chrome extension working on Cronvall website, the code for it can be found in the current repository.
+The backend is a simple Flask server using sentence_transformers and pandas for data analysis.
 The backend code is placed in junction22-backend repository (sub-module of this repo).
 
 ### How to start frontend
-1. download the repo
-2. go to [chrome://extensions/](chrome://extensions/), toggle Developer mode in top-right corner, press Load unpacked with the path to downloaded repo
-3. go to https://www.cronvall.fi/ -> Metal and Plastic Sheets
+1. Download the repo
+2. Go to [chrome extensions](chrome://extensions/), toggle Developer mode in top-right corner, press Load unpacked with the path to downloaded repo
+3. Go to [cronvall](https://www.cronvall.fi/) -> Metal and Plastic Sheets
 
 ### How to start backend
-1. install requirements.txt
-2. `flask run`
+1. Install requirements.txt
+2. Start the server: `flask run`
 
-### Features
-- Sustainability information for products ([example](https://www.cronvall.fi/epages/CronvallShop.sf/secb69bc55229/?ObjectPath=/Shops/CronvallShop/Products/2201151085&ViewAction=ViewProduct&SearchParams=%7B%22Materiaali%22%3A%22Kuumasinkitty+DX51D%2BZ275MAC%22%7D))
-  - sustainability score, alternatives, emissions and other information for different materials (most data present for metal sheets)
-- Recycling: on every product page there is an option to return some amount of product instead of buying new - this helps customers get rid of excess materials without producing any waste
-  - can be seen on any product page or basket view
+Touch this [example](https://www.cronvall.fi/epages/CronvallShop.sf/sec242a7960e8/?ObjectPath=/Shops/CronvallShop/Products/TiGr1) after setting up the project. 
+
+<p align="center">
+Join in our sustainable future
+</p>
+
+<p align="center">
+<img src="data/end.png" alt="drawing" width="100"/>
+</p>
