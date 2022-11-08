@@ -4,7 +4,7 @@
 </p>
 
 <p align="center">
-<a href="https://www.cronvall.fi/">CRONVALL</a>, <a href=https://www.hackjunction.com/>JUNCTION'22</a>
+<a href=https://www.hackjunction.com/>JUNCTION'22</a> - winner of the <a href="https://www.cronvall.fi/">Cronvall</a> challenge.
 </p>
 
 ## Project description
